@@ -1,0 +1,33 @@
+/* 覆盖ConnectButton的默认样式 */
+.custom-connect-button button {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  font-family: "Space Grotesk", sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: normal !important;
+  line-height: 1.25rem !important;
+  color: #fff !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+  height: 1.25rem !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+/* 确保按钮内容样式一致 */
+.custom-connect-button button span,
+.custom-connect-button button div {
+  font-family: "Space Grotesk", sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: normal !important;
+  line-height: 1.25rem !important;
+  color: #fff !important;
+}
+
+/* 隐藏下拉菜单图标 */
+.custom-connect-button button svg {
+  display: none !important;
+}

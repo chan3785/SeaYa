@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  email        String   @unique
+  password     String
+  walletAdress String   @unique @map("wallet_address")
+  profilePic   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  events   Event[]   @relation("UserEvents") // User's created events
+  projects Project[]
+  votes    Vote[]
+  nft      NFT?
+
+  @@map("users")
+}
+
+model Project {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  eventId     String @map("event_id")
+  userId      String @map("user_id")
+
+  event Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  votes Vote[]
+
+  @@map("projects")
+}
+
+model Vote {
+  id        String   @id @default(uuid())
+  projectId String
+  voterId   String
+  score     Int
+  type      String
+  votedAt   DateTime @default(now()) @map("voted_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  voter   User    @relation(fields: [voterId], references: [id], onDelete: Cascade) // Added relation
+
+  @@map("votes")
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  type        EventType
+  startDate   DateTime
+  endDate     DateTime
+  creatorId   String    @map("creator_id")
+
+  mode         EventMode
+  creator      User          @relation("UserEvents", fields: [creatorId], references: [id], onDelete: Cascade)
+  projects     Project[]
+  winnerEvents WinnerEvent[]
+
+  @@map("events")
+}
+
+model Winner {
+  id           String        @id @default(uuid()) // Assuming this is String type
+  // other fields...
+  winnerEvents WinnerEvent[]
+}
+
+model WinnerEvent {
+  // Make sure these field types match their respective model id types
+  eventId  String
+  winnerId String
+
+  // Relation fields
+  event  Event  @relation(fields: [eventId], references: [id])
+  winner Winner @relation(fields: [winnerId], references: [id])
+
+  // Composite primary key
+  @@id([eventId, winnerId])
+}
+
+enum EventType {
+  SIDE_EVENT // Enum names should be uppercase
+  MAIN_EVENT
+}
+
+enum EventMode {
+  ONLINE
+  OFFLINE
+}
+
+model NFT {
+  id          String   @id @default(uuid())
+  userId      String   @unique @map("user_id")
+  metadata    Json
+  ranking     Int
+  lastUpdated DateTime @updatedAt @map("last_updated")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("nfts")
+}
