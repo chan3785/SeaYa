@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { FiSearch, FiBell, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
-
+import Dropdown from "@mui/joy/Dropdown";
+import Menu from "@mui/joy/Menu";
+import MenuButton from "@mui/joy/MenuButton";
+import MenuItem from "@mui/joy/MenuItem";
 export default function EventsNavbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -56,37 +59,19 @@ export default function EventsNavbar() {
           Vote
         </a>
         <div className="relative group">
-          <button className="text-white font-['Space_Grotesk'] flex items-center space-x-1 hidden md:flex">
-            <span>Create</span>
-            <svg
-              className="w-4 h-4 ml-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-          <div className="absolute right-0 mt-2 w-48 bg-[#0a2539] rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-white hover:bg-[#1e3a4f]"
-            >
-              Create Event
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-white hover:bg-[#1e3a4f]"
-            >
-              Create Project
-            </a>
-          </div>
+          <Dropdown>
+            <MenuButton variant="plain" color="primary" size="lg">
+              Create
+            </MenuButton>
+            <Menu>
+              <MenuItem>
+                <a href="/create-event">Create Event</a>
+              </MenuItem>
+              <MenuItem>
+                <a href="/create-project">Create Project</a>
+              </MenuItem>
+            </Menu>
+          </Dropdown>
         </div>
 
         {/* Notification Icon with Red Dot */}
