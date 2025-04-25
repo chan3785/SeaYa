@@ -2,7 +2,7 @@
 <h3 align="center">Sui ecosystem AI-driven event management platform</h3>
 
 <p align="center">
-  <a href="https://sea-ya.vercel.app/" style="color: #a77dff">Platform</a> | <a href="" style="color: #a77dff">Pitchdeck</a> | <a href="" style="color: #a77dff">Demo Video</a>
+  <a href="https://sea-ya-bice.vercel.app/" style="color: #a77dff">Platform</a> | <a href="" style="color: #a77dff">Pitchdeck</a> | <a href="" style="color: #a77dff">Demo Video</a>
 </p>
 
 <p align="center">
