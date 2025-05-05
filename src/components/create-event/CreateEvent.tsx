@@ -4,6 +4,7 @@ import DatePicker from "./DatePicker";
 import { DateRange } from "react-day-picker";
 import { addDays } from "date-fns";
 import useDate from "../../context/useDate";
+import TimePicker from "./TimePicker";
 
 interface FormData {
   eventName: string;
@@ -68,34 +69,9 @@ export default function CreateEvents() {
           />
         </div>
         <div className="space-y-4">
-          <div className="relative"></div>
-          <div className="relative">
+          <div className="relative flex gap-4">
             <DatePicker className="text-white" />
-          </div>
-
-          <div className="relative">
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              🕒
-            </span>
-            <input
-              type="time"
-              name="startTime"
-              value={formData.startTime}
-              onChange={handleChange}
-              className="w-full p-2 pl-8 rounded bg-gray-700 text-white"
-            />
-          </div>
-          <div className="relative">
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              🕒
-            </span>
-            <input
-              type="time"
-              name="endTime"
-              value={formData.endTime}
-              onChange={handleChange}
-              className="w-full p-2 pl-8 rounded bg-gray-700 text-white"
-            />
+            <TimePicker />
           </div>
           <div>
             <select
