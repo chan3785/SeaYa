@@ -1,0 +1,16 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .all-\[unset\] {
+        all: unset;
+    }
+}
+
+:root {
+    --primary-color: rgba(77, 162, 255, 1);
+    --seaya-black: rgba(3, 15, 28, 1);
+    --seaya-grey: rgba(211, 211, 211, 1);
+    --secondary-color: rgba(1, 24, 41, 1);
+    --stroke-gray: rgba(94, 94, 94, 1);
+}

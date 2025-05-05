@@ -5,6 +5,7 @@ import { DateRange } from "react-day-picker";
 import { addDays } from "date-fns";
 import useDate from "../../context/useDate";
 import TimePicker from "./TimePicker";
+import TimeZonePicker from "./TimezonePicker";
 
 interface FormData {
   eventName: string;
@@ -72,6 +73,7 @@ export default function CreateEvents() {
           <div className="relative flex gap-4">
             <DatePicker className="text-white" />
             <TimePicker />
+            <TimeZonePicker />
           </div>
           <div>
             <select
