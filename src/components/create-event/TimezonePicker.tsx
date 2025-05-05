@@ -1,12 +1,20 @@
 "use client";
 
 import * as React from "react";
-import { format } from "date-fns";
 import { Globe } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
 import useDate from "../../context/useDate";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export default function TimeZonePicker({
   className,
@@ -25,8 +33,15 @@ export default function TimeZonePicker({
       >
         <div className="grid grid-cols-1 gap-2">
           <Globe className="w-full h-full" />
-          <div className="text-xl w-[200px] items-center">
-            <span className="">Select Time Zone</span>
+          <div className="w-[200px] items-center">
+            <select
+              name="timeZone"
+              className="p-2 rounded bg-gray-700 text-muted-foreground w-[150px] bg-transparent"
+            >
+              <option value="">Select Time Zone</option>
+              <option value="UTC">UTC</option>
+              <option value="EST">EST</option>
+            </select>
           </div>
         </div>
       </Button>
