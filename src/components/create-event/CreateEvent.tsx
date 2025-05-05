@@ -75,18 +75,6 @@ export default function CreateEvents() {
             <TimePicker />
             <TimeZonePicker />
           </div>
-          <div>
-            <select
-              name="timeZone"
-              value={formData.timeZone}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-gray-700 text-white"
-            >
-              <option value="">Select Time Zone</option>
-              <option value="UTC">UTC</option>
-              <option value="EST">EST</option>
-            </select>
-          </div>
           <div className="relative">
             <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
               📍
