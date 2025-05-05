@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import EventsNavbar from "../events/EventsNavbar";
 import DatePicker from "./DatePicker";
-import { DateRange } from "react-day-picker";
-import { addDays } from "date-fns";
 import useDate from "../../context/useDate";
 import TimePicker from "./TimePicker";
 import TimeZonePicker from "./TimezonePicker";
-import { TimePicker12Demo } from "./TimePicker/time-picker-12h-demo";
+import { FileText, MapPin, Palette, Tickets, UserRound } from "lucide-react";
+import Footer from "../Footer";
 
 interface FormData {
   eventName: string;
@@ -38,7 +37,6 @@ export default function CreateEvents() {
     attendeeAmount: "",
     ticketsOption: "",
   });
-  const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
   const { dateValue } = useDate();
   const handleChange = (
     e: React.ChangeEvent<
@@ -49,7 +47,6 @@ export default function CreateEvents() {
     setFormData({ ...formData, [name]: value });
     console.log(formData);
   };
-  const [date, setDate] = useState<Date | undefined>();
   const handleSubmit = () => {
     console.log(formData);
   };
@@ -70,15 +67,15 @@ export default function CreateEvents() {
             className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-semibold text-white font-['Space_Grotesk'] bg-transparent"
           />
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 w-[845px]">
           <div className="relative flex gap-4">
             <DatePicker className="text-white" />
-            <TimePicker12Demo date={date} setDate={setDate} />
+            <TimePicker />
             <TimeZonePicker />
           </div>
           <div className="relative">
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              📍
+            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+              <MapPin className="text-muted-foreground mx-1" />
             </span>
             <input
               type="text"
@@ -86,69 +83,69 @@ export default function CreateEvents() {
               value={formData.location}
               onChange={handleChange}
               placeholder="Add location"
-              className="w-full p-2 pl-8 rounded bg-gray-700 text-white"
+              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
             />
           </div>
-          <div className="relative">
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              ✏️
+          <div className="relative flex items-center">
+            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+              <FileText className="text-muted-foreground mx-1" />
             </span>
-            <textarea
+            <input
               name="description"
               value={formData.description}
               onChange={handleChange}
               placeholder="Event Description"
-              className="w-full p-2 pl-8 rounded bg-gray-700 text-white"
-            ></textarea>
+              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+            />
           </div>
           <div>
-            <button
-              onClick={() => setIsMoreOptionsOpen(!isMoreOptionsOpen)}
-              className="text-gray-300"
-            >
-              More options {isMoreOptionsOpen ? "▲" : "▼"}
-            </button>
-            {isMoreOptionsOpen && (
-              <div className="mt-2">
-                <div className="relative">
-                  <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-                    🎫
-                  </span>
-                  <input
-                    type="text"
-                    name="ticketsOption"
-                    value={formData.ticketsOption}
-                    onChange={handleChange}
-                    placeholder="Tickets option"
-                    className="w-full p-2 pl-8 rounded bg-gray-700 text-white"
-                  />
-                </div>
+            <div className="text-gray-300">More option :</div>
+            <div className="mt-2">
+              <div className="relative">
+                <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+                  <Tickets className="text-muted-foreground mx-1" />
+                </span>
+                <input
+                  type="text"
+                  name="ticketsOption"
+                  value={formData.ticketsOption}
+                  onChange={handleChange}
+                  placeholder="Tickets option"
+                  className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+                />
               </div>
-            )}
+            </div>
           </div>
+          <div className="text-gray-300">Add (POAP) NFTs</div>
           <div className="relative">
+            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+              <Palette className="text-muted-foreground mx-1" />
+            </span>
             <input
               type="text"
               name="poapTitle"
               value={formData.poapTitle}
               onChange={handleChange}
               placeholder="POAP Title"
-              className="w-full p-2 rounded bg-gray-700 text-white"
+              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
             />
           </div>
           <div className="relative">
+            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+              <FileText className="text-muted-foreground mx-1" />
+            </span>
             <input
               type="text"
               name="poapDescription"
               value={formData.poapDescription}
               onChange={handleChange}
               placeholder="POAP Description"
-              className="w-full p-2 rounded bg-gray-700 text-white"
+              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
             />
           </div>
           <div className="relative">
             <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              👥
+              <UserRound className="text-muted-foreground mx-1" />
             </span>
             <input
               type="number"
@@ -156,12 +153,12 @@ export default function CreateEvents() {
               value={formData.attendeeAmount}
               onChange={handleChange}
               placeholder="Amount of attendee"
-              className="w-full p-2 pl-8 rounded bg-gray-700 text-white"
+              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
             />
           </div>
           <button
             onClick={handleSubmit}
-            className="w-full p-2 bg-blue-600 rounded text-white"
+            className="w-full p-2 bg-[#4DA2FF] rounded text-white"
           >
             Create Event
           </button>
@@ -174,6 +171,7 @@ export default function CreateEvents() {
           className="w-full rounded-lg"
         />
       </div>
+      <Footer />
     </div>
   );
 }

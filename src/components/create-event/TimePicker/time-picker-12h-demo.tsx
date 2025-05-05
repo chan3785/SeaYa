@@ -19,7 +19,7 @@ export function TimePicker12Demo({ date, setDate }: TimePickerDemoProps) {
   const periodRef = React.useRef<HTMLButtonElement>(null);
 
   return (
-    <div className="flex items-center gap-2 text-white ">
+    <div className="flex items-center gap-1 text-white">
       <div className="grid gap-1 text-center">
         <TimePickerInput
           picker="12hours"
