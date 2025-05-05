@@ -6,6 +6,7 @@ import { addDays } from "date-fns";
 import useDate from "../../context/useDate";
 import TimePicker from "./TimePicker";
 import TimeZonePicker from "./TimezonePicker";
+import { TimePicker12Demo } from "./TimePicker/time-picker-12h-demo";
 
 interface FormData {
   eventName: string;
@@ -48,7 +49,7 @@ export default function CreateEvents() {
     setFormData({ ...formData, [name]: value });
     console.log(formData);
   };
-
+  const [date, setDate] = useState<Date | undefined>();
   const handleSubmit = () => {
     console.log(formData);
   };
@@ -72,7 +73,7 @@ export default function CreateEvents() {
         <div className="space-y-4">
           <div className="relative flex gap-4">
             <DatePicker className="text-white" />
-            <TimePicker />
+            <TimePicker12Demo date={date} setDate={setDate} />
             <TimeZonePicker />
           </div>
           <div className="relative">
