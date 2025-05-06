@@ -5,6 +5,7 @@ import EventsPage from "./page/events";
 import DiscoverEventsPage from "./page/discover-events";
 import ProjectsPage from "./page/projects";
 import CreateEventsPage from "./page/create-event";
+import CreateProjectsPage from "./page/create-project";
 
 export default function App() {
   return (
@@ -15,7 +16,7 @@ export default function App() {
         <Route path="/discover-events" element={<DiscoverEventsPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/create-events" element={<CreateEventsPage />} />
-        {/* <Route path="/create-project" element={<ProjectsPage />} /> */}
+        <Route path="/create-projects" element={<CreateProjectsPage />} />
       </Routes>
     </Router>
   );
