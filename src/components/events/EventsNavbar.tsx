@@ -65,10 +65,10 @@ export default function EventsNavbar() {
             </MenuButton>
             <Menu>
               <MenuItem>
-                <a href="/create-event">Create Event</a>
+                <a href="/create-events">Create Event</a>
               </MenuItem>
               <MenuItem>
-                <a href="/create-project">Create Project</a>
+                <a href="/create-projects">Create Project</a>
               </MenuItem>
             </Menu>
           </Dropdown>
