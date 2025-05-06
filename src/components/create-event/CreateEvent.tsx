@@ -20,6 +20,7 @@ interface FormData {
   poapDescription: string;
   attendeeAmount: string;
   ticketsOption?: string;
+  eventImage?: File | null;
 }
 
 export default function CreateEvents() {
@@ -36,8 +37,11 @@ export default function CreateEvents() {
     poapDescription: "",
     attendeeAmount: "",
     ticketsOption: "",
+    eventImage: null,
   });
+  const [previewUrl, setPreviewUrl] = useState<string>("");
   const { dateValue } = useDate();
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -47,8 +51,21 @@ export default function CreateEvents() {
     setFormData({ ...formData, [name]: value });
     console.log(formData);
   };
+
   const handleSubmit = () => {
     console.log(formData);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData({ ...formData, eventImage: file });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -56,121 +73,141 @@ export default function CreateEvents() {
       <div className="mb-8">
         <EventsNavbar />
       </div>
-      <div className="w-full pt-[2rem] pb-[4rem] px-4 sm:px-8 md:px-16 lg:px-24">
-        <div className="mb-6">
-          <input
-            type="text"
-            name="eventName"
-            value={formData.eventName}
-            onChange={handleChange}
-            placeholder="Enter Event Name"
-            className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-semibold text-white font-['Space_Grotesk'] bg-transparent"
-          />
-        </div>
-        <div className="space-y-4 w-[845px]">
-          <div className="relative flex gap-4">
-            <DatePicker className="text-white" />
-            <TimePicker />
-            <TimeZonePicker />
-          </div>
-          <div className="relative">
-            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
-              <MapPin className="text-muted-foreground mx-1" />
-            </span>
+      <section className="flex">
+        <div className="w-full pt-[2rem] pb-[4rem] pl-4 sm:pl-8 md:pl-16 lg:pl-24">
+          <div className="mb-6">
             <input
               type="text"
-              name="location"
-              value={formData.location}
+              name="eventName"
+              value={formData.eventName}
               onChange={handleChange}
-              placeholder="Add location"
-              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+              placeholder="Enter Event Name"
+              className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-semibold text-white font-['Space_Grotesk'] bg-transparent"
             />
           </div>
-          <div className="relative flex items-center">
-            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
-              <FileText className="text-muted-foreground mx-1" />
-            </span>
-            <input
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Event Description"
-              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
-            />
-          </div>
-          <div>
-            <div className="text-gray-300">More option :</div>
-            <div className="mt-2">
-              <div className="relative">
-                <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
-                  <Tickets className="text-muted-foreground mx-1" />
-                </span>
-                <input
-                  type="text"
-                  name="ticketsOption"
-                  value={formData.ticketsOption}
-                  onChange={handleChange}
-                  placeholder="Tickets option"
-                  className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
-                />
+          <div className="space-y-4 w-[845px]">
+            <div className="relative flex gap-4">
+              <DatePicker className="text-white" />
+              <TimePicker />
+              <TimeZonePicker />
+            </div>
+            <div className="relative">
+              <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+                <MapPin className="text-muted-foreground mx-1" />
+              </span>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="Add location"
+                className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+              />
+            </div>
+            <div className="relative flex items-center">
+              <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+                <FileText className="text-muted-foreground mx-1" />
+              </span>
+              <input
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Event Description"
+                className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+              />
+            </div>
+            <div>
+              <div className="text-gray-300">More option :</div>
+              <div className="mt-2">
+                <div className="relative">
+                  <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+                    <Tickets className="text-muted-foreground mx-1" />
+                  </span>
+                  <input
+                    type="text"
+                    name="ticketsOption"
+                    value={formData.ticketsOption}
+                    onChange={handleChange}
+                    placeholder="Tickets option"
+                    className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+                  />
+                </div>
               </div>
             </div>
+            <div className="text-gray-300">Add (POAP) NFTs</div>
+            <div className="relative">
+              <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+                <Palette className="text-muted-foreground mx-1" />
+              </span>
+              <input
+                type="text"
+                name="poapTitle"
+                value={formData.poapTitle}
+                onChange={handleChange}
+                placeholder="POAP Title"
+                className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+              />
+            </div>
+            <div className="relative">
+              <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
+                <FileText className="text-muted-foreground mx-1" />
+              </span>
+              <input
+                type="text"
+                name="poapDescription"
+                value={formData.poapDescription}
+                onChange={handleChange}
+                placeholder="POAP Description"
+                className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+              />
+            </div>
+            <div className="relative">
+              <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
+                <UserRound className="text-muted-foreground mx-1" />
+              </span>
+              <input
+                type="number"
+                name="attendeeAmount"
+                value={formData.attendeeAmount}
+                onChange={handleChange}
+                placeholder="Amount of attendee"
+                className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
+              />
+            </div>
+            <button
+              onClick={handleSubmit}
+              className="w-full p-2 bg-[#4DA2FF] rounded text-white"
+            >
+              Create Event
+            </button>
           </div>
-          <div className="text-gray-300">Add (POAP) NFTs</div>
-          <div className="relative">
-            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
-              <Palette className="text-muted-foreground mx-1" />
-            </span>
-            <input
-              type="text"
-              name="poapTitle"
-              value={formData.poapTitle}
-              onChange={handleChange}
-              placeholder="POAP Title"
-              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
-            />
-          </div>
-          <div className="relative">
-            <span className="absolute left-1 top-1/2 transform -translate-y-1/2">
-              <FileText className="text-muted-foreground mx-1" />
-            </span>
-            <input
-              type="text"
-              name="poapDescription"
-              value={formData.poapDescription}
-              onChange={handleChange}
-              placeholder="POAP Description"
-              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
-            />
-          </div>
-          <div className="relative">
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              <UserRound className="text-muted-foreground mx-1" />
-            </span>
-            <input
-              type="number"
-              name="attendeeAmount"
-              value={formData.attendeeAmount}
-              onChange={handleChange}
-              placeholder="Amount of attendee"
-              className="w-full p-2 pl-8 bg-gray-700 text-muted-foreground top-0 left-0 bg-seaya-black rounded-[10px] border border-solid border-stroke-gray"
-            />
-          </div>
-          <button
-            onClick={handleSubmit}
-            className="w-full p-2 bg-[#4DA2FF] rounded text-white"
-          >
-            Create Event
-          </button>
         </div>
-      </div>
-      <div className="md:w-1/2 p-4">
-        <img
-          src="https://via.placeholder.com/300x300?text=Cosmic+Scene"
-          alt="Cosmic scene"
-          className="w-full rounded-lg"
-        />
-      </div>
+        <div className="md:w-1/2 px-4 pt-10">
+          <div
+            className="w-full aspect-square bg-seaya-black border-2 border-dashed border-stroke-gray rounded-lg flex items-center justify-center cursor-pointer hover:border-[#4DA2FF] transition-colors"
+            onClick={() => document.getElementById("imageUpload")?.click()}
+          >
+            {previewUrl ? (
+              <img
+                src={previewUrl}
+                alt="Event preview"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <div className="text-center text-gray-400">
+                <p>Click to upload image</p>
+              </div>
+            )}
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
