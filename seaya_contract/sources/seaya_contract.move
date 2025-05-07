@@ -1,24 +1,18 @@
-/// Module: SeaYa Contract
+/// Module: seaya_contract
 module seaya::seaya {
     use sui::coin::{Self, Coin};
     use sui::event;
-    use sui::url::{Self, Url};
+    use sui::sui::SUI;
     use std::string::String;
     use sui::balance::{Self, Balance};
-    use sui::clock::Clock;
-    use sui::object::{Self, ID, UID};
+    use sui::object::{UID, ID};
     use sui::transfer;
-    use sui::tx_context::{Self, TxContext};
+    use sui::tx_context::TxContext;
     use std::vector;
-    use std::option::{Self, Option};
     
-    // IMPORTANT: Before deploying to mainnet, replace this custom BUCK token
-    // with the real Bucket Protocol BUCK stablecoin by:
-    // 1. Removing this struct definition
-    // 2. Adding the following import:
-    //    use 0xce7ff77a83ea0cb6fd39bd8748e2ec89a3f41e8efdc3f4eb123e0ca37b184db2::buck::BUCK;
-    public struct BUCK has drop {}
-
+    // 使用 SUI 代幣替代自定義 BUCK
+    // 取消定義自定義 BUCK，改用 SUI
+    
     public struct EventCreated has copy, drop {
         id: ID,
         name: String,
@@ -55,7 +49,7 @@ module seaya::seaya {
         attendees: vector<address>,
         status: u8,                        // Event status (active, ended, canceled)
         attendee_details: vector<Attendee>, // Detailed attendee information including payment and refund status
-        funds: Balance<BUCK>,              // Collected funds in BUCK
+        funds: Balance<SUI>,              // 使用 SUI 而非 BUCK
     }
 
     // ===== Error Codes =====
@@ -69,8 +63,6 @@ module seaya::seaya {
     const E_INSUFFICIENT_PAYMENT: u64 = 4;
     /// Event is no longer active (ended or canceled)
     const E_EVENT_NOT_ACTIVE: u64 = 5;
-    /// Event is still active
-    const E_EVENT_STILL_ACTIVE: u64 = 6;
     /// Event has not been canceled, refund not available
     const E_EVENT_NOT_CANCELED: u64 = 7;
     /// User is not an attendee of this event
@@ -118,9 +110,10 @@ module seaya::seaya {
     }
 
     /// Register for an event with BUCK payment
+    #[allow(lint(self_transfer))]
     public fun register_with_fee(
         event: &mut Event, 
-        payment: Coin<BUCK>, 
+        payment: Coin<SUI>, 
         ctx: &mut TxContext
     ) {
         // Verify event is active
@@ -168,6 +161,7 @@ module seaya::seaya {
     }
 
     /// End event and withdraw funds (host only)
+    #[allow(lint(self_transfer))]
     public fun end_event_and_withdraw(
         event: &mut Event,
         ctx: &mut TxContext
@@ -226,6 +220,7 @@ module seaya::seaya {
     }
 
     /// Request refund (available when event is canceled)
+    #[allow(lint(self_transfer))]
     public fun request_refund(
         event: &mut Event,
         ctx: &mut TxContext
@@ -307,11 +302,13 @@ module seaya::seaya {
     /// Distribute reward to event organizer (only from authorized address)
     public fun distribute_organizer_reward(
         event: &Event,
-        reward: Coin<BUCK>,
+        reward: Coin<SUI>,
         ctx: &mut TxContext
     ) {
         let sender = tx_context::sender(ctx);
-        let authorized_distributor = @0xCAFE; // Authorized distributor address
+        // 使用您的實際地址，這裡需要填入您的地址
+        // 例如：@0x883ec267a6986d4cefb71f712287f3d3649bac54a291251e3af7265647b86733
+        let authorized_distributor = @0x883ec267a6986d4cefb71f712287f3d3649bac54a291251e3af7265647b86733;
         
         // Verify sender is authorized distributor
         assert!(sender == authorized_distributor, E_NOT_AUTHORIZED);
@@ -334,7 +331,7 @@ module seaya::seaya {
             attendees: vector::empty<address>(),
             status: STATUS_ACTIVE,
             attendee_details: vector::empty<Attendee>(),
-            funds: balance::zero<BUCK>()
+            funds: balance::zero<SUI>()
         };
 
         event::emit(EventCreated {
@@ -373,6 +370,7 @@ module seaya::seaya {
         });
     }
 
+    #[allow(lint(self_transfer))]
     public fun register_for_event(event: &mut Event, ctx: &mut TxContext){
         // Verify event is active
         assert!(event.status == STATUS_ACTIVE, E_EVENT_NOT_ACTIVE);
