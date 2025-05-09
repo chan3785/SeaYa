@@ -1,5 +1,5 @@
 /// Module: seaya_contract
-module seaya::seaya {
+module seaya::seaya_v2 {
     use sui::coin::{Self, Coin};
     use sui::event;
     use sui::sui::SUI;
@@ -49,7 +49,7 @@ module seaya::seaya {
         attendees: vector<address>,
         status: u8,                        // Event status (active, ended, canceled)
         attendee_details: vector<Attendee>, // Detailed attendee information including payment and refund status
-        funds: Balance<SUI>,              // 使用 SUI 而非 BUCK
+        funds: Balance<SUI>,              // Collected funds in SUI
     }
 
     // ===== Error Codes =====
@@ -109,7 +109,7 @@ module seaya::seaya {
         refunded: bool,
     }
 
-    /// Register for an event with BUCK payment
+    /// Register for an event with fee
     #[allow(lint(self_transfer))]
     public fun register_with_fee(
         event: &mut Event, 
@@ -402,6 +402,59 @@ module seaya::seaya {
         });
 
         transfer::transfer(ticket, attendee_address)
+    }
+
+    /// Register for an event with any coin type (including BUCK)
+    /// This function accepts any coin type as payment, but does not keep the coins
+    /// Instead, it directly transfers the payment to the event host
+    #[allow(lint(self_transfer))]
+    public fun register_with_any_coin<CoinType>(
+        event: &mut Event,
+        payment: Coin<CoinType>,
+        ctx: &mut TxContext
+    ) {
+        // Verify event is active
+        assert!(event.status == STATUS_ACTIVE, E_EVENT_NOT_ACTIVE);
+        // Verify event has not reached maximum attendees
+        assert!(vector::length(&event.attendees) < event.max_attendees, E_MAX_ATTENDEES_REACHED);
+
+        let attendee_address = tx_context::sender(ctx);
+        // Verify user has not already registered
+        assert!(!vector::contains(&event.attendees, &attendee_address), E_ALREADY_REGISTERED);
+        
+        // Check if payment meets required amount (converted to smallest unit)
+        let payment_amount = coin::value(&payment);
+        assert!(payment_amount >= event.ticket_price, E_INSUFFICIENT_PAYMENT);
+
+        // Add attendee to list
+        vector::push_back(&mut event.attendees, attendee_address);
+        
+        // Add detailed attendee information
+        vector::push_back(&mut event.attendee_details, Attendee {
+            addr: attendee_address,
+            amount: payment_amount,
+            refunded: false,
+        });
+        
+        // Transfer payment directly to the host instead of storing it
+        // This simplifies handling different coin types
+        transfer::public_transfer(payment, event.host);
+
+        // Create event ticket
+        let ticket = EventTicket {
+            id: object::new(ctx),
+            event_id: object::uid_to_inner(&event.id),
+            attendee: attendee_address,
+        };
+
+        // Emit registration event
+        event::emit(AttendeeRegistered {
+            event_id: object::uid_to_inner(&event.id),
+            attendee: attendee_address,
+        });
+
+        // Transfer ticket to attendee
+        transfer::transfer(ticket, attendee_address);
     }
 }
 
