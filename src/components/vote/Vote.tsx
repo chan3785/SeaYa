@@ -4,7 +4,7 @@ import Footer from "../Footer";
 import Headline from "./Headline";
 import ProposalList from "./ProposalList";
 
-export default function VoteProposals() {
+export default function Vote() {
   return (
     <div className="main-container w-full h-auto bg-[#011829] relative overflow-hidden">
       <div className="mb-8">
