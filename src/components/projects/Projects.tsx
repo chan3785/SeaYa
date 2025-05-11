@@ -7,7 +7,7 @@ import { projects, ProjectType } from "./projectData";
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<
-    "all" | "hackathon" | "development" | "design" | "others"
+    "all" | "hackathon" | "development" | "games" | "others"
   >("all");
   const [selectedProject, setSelectedProject] = useState<ProjectType | null>(
     null
@@ -68,8 +68,8 @@ export default function Projects() {
                 Development
               </button>
               <button
-                className={`py-[0.5rem] px-[1rem] rounded-full text-[0.875rem] font-medium transition-colors ${activeTab === "design" ? "bg-white text-[#011829]" : "text-white"}`}
-                onClick={() => setActiveTab("design")}
+                className={`py-[0.5rem] px-[1rem] rounded-full text-[0.875rem] font-medium transition-colors ${activeTab === "games" ? "bg-white text-[#011829]" : "text-white"}`}
+                onClick={() => setActiveTab("games")}
               >
                 Design
               </button>
