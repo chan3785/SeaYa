@@ -64,30 +64,7 @@ This platform addresses these challenges by:
 
 ## User Flow
 
-```mermaid
-graph TD
-    A[User visits Platform] -->|Login via zkLogin| B{Choose Event Type}
-    B -->|Register for Hackathon| C[Submit Hackathon Registration]
-    B -->|Register for Seminar/Conference| D[Submit Registration]
-    B -->|Register for Side Event| E[Submit Application]
-
-    C --> F[Data Stored on Sui Blockchain]
-    D --> F
-    E --> F
-
-    B -->|Submit Project/Proposal| G[Submit Event Application]
-    G --> H[Data Stored on Sui Blockchain]
-
-    B -->|Vote on Projects/Selections| I[Judge & Community Voting]
-    I --> J[Votes Stored on Sui Blockchain]
-
-    K[AI Agent] -->|Promotes Event & Voting| L[Twitter & Social Media]
-    M[Leaderboard Updates] -->|Dynamic NFT Updated| N[NFT Stored on Sui]
-
-    H -->|Displayed for Review| O[Community & Judges Evaluate]
-    J -->|Results Announced| P[Leaderboard & Rewards]
-
-```
+![image](https://github.com/user-attachments/assets/33bf7582-fbaa-4c15-a222-c628ae746d1b)
 
 ## Sequence Diagram
 
