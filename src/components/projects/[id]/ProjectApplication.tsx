@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FileText, MapPin } from "lucide-react";
+import { toast, Toaster } from "sonner";
 
 interface ProjectDetailProps {
   projectId: string;
@@ -7,17 +8,10 @@ interface ProjectDetailProps {
 }
 
 interface FormData {
-  projectName: string;
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-  timeZone: string;
+  projectId: string;
   location: string;
-  category: string;
   description: string;
-  ticketsOption?: string;
-  eventImage?: File | null;
+  additionalInformation?: string;
 }
 
 export default function ProjectApplication({
@@ -25,17 +19,10 @@ export default function ProjectApplication({
   onClose,
 }: ProjectDetailProps) {
   const [formData, setFormData] = useState<FormData>({
-    projectName: "",
-    startDate: "",
-    endDate: "",
-    startTime: "",
-    endTime: "",
-    timeZone: "",
+    projectId: "",
     location: "",
-    category: "",
     description: "",
-    ticketsOption: "",
-    eventImage: null,
+    additionalInformation: "",
   });
 
   const handleChange = (
@@ -47,6 +34,19 @@ export default function ProjectApplication({
     setFormData({ ...formData, [name]: value });
     console.log(formData);
   };
+
+  const handleSubmit = () => {
+    setFormData({ ...formData, [projectId]: projectId });
+    console.log(formData);
+    toast("Application has been submitted", {
+      // description: "Sunday, December 03, 2023 at 9:00 AM",
+      action: {
+        label: "Go Home",
+        onClick: () => console.log("home"),
+      },
+    });
+  };
+
   return (
     <div className="flex justify-center fixed inset-0 z-50 items-center">
       <div className="bg-white w-[720px] h-[722px] flex justify-center">
@@ -83,7 +83,7 @@ export default function ProjectApplication({
                   <input
                     type="text"
                     name="description"
-                    value={formData.location}
+                    value={formData.description}
                     onChange={handleChange}
                     placeholder="Proposal Description"
                     className="w-full text-muted-foreground top-0 left-0"
@@ -115,8 +115,8 @@ export default function ProjectApplication({
                     </span>
                     <input
                       type="text"
-                      name="location"
-                      value={formData.location}
+                      name="additionalInformation"
+                      value={formData.additionalInformation}
                       onChange={handleChange}
                       placeholder="More Infomations"
                       className="w-full pl-8 text-muted-foreground top-0 left-0"
@@ -127,15 +127,19 @@ export default function ProjectApplication({
             </div>
           </div>
 
-          <div className="flex flex-col h-[63px] items-center justify-center gap-2.5 px-3.5 py-[19px] relative self-stretch w-full bg-primary-color rounded-[10px]">
+          <div className="flex flex-col h-[63px] items-center justify-center gap-2.5 py-[19px] relative self-stretch w-full bg-primary-color rounded-[10px]">
             <div className="inline-flex items-start gap-3 relative flex-[0_0_auto] w-full">
-              <button className="flex h-[60px] items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full bg-[#4DA2FF] rounded-[10px] text-white">
-                Apply Now!
+              <button
+                className="flex h-[60px] items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full bg-[#4DA2FF] rounded-[10px] text-white"
+                onClick={handleSubmit}
+              >
+                Apply!
               </button>
             </div>
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
