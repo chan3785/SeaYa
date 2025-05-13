@@ -9,6 +9,7 @@ import CreateProjectsPage from "./page/create-project";
 import ProfilePage from "./page/profile";
 import VotePage from "./page/vote";
 import SettingsPage from "./page/settings";
+import ProjectDetail from "./components/projects/[id]/ProjectDetail";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/events" element={<EventsPage />} />
         <Route path="/discover-events" element={<DiscoverEventsPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/create-events" element={<CreateEventsPage />} />
         <Route path="/create-projects" element={<CreateProjectsPage />} />
         <Route path="/profile" element={<ProfilePage />} />

@@ -4,14 +4,13 @@ import EventsNavbar from "../events/EventsNavbar";
 import ProjectCard from "./ProjectCard";
 import ProjectDetail from "./ProjectDetail";
 import { projects, ProjectType } from "./projectData";
+import { useNavigate } from "react-router-dom";
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<
     "all" | "hackathon" | "development" | "games" | "others"
   >("all");
-  const [selectedProject, setSelectedProject] = useState<ProjectType | null>(
-    null
-  );
+  const navigate = useNavigate();
 
   // Filter projects based on active tab
   const getFilteredProjects = () => {
@@ -94,7 +93,7 @@ export default function Projects() {
                 date={project.date}
                 prize={project.prize}
                 imageUrl={project.imageUrl}
-                onClick={() => setSelectedProject(project)}
+                onClick={() => navigate(`/projects/${project.id}`)}
               />
             ))
           ) : (
@@ -103,14 +102,6 @@ export default function Projects() {
             </p>
           )}
         </div>
-
-        {/* Project Detail Modal */}
-        {selectedProject && (
-          <ProjectDetail
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
-        )}
       </div>
       <Footer />
     </div>
