@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Footer from "../Footer";
 import EventsNavbar from "../events/EventsNavbar";
 import ProjectCard from "./ProjectCard";
-import ProjectDetail from "./ProjectDetail";
-import { projects, ProjectType } from "./projectData";
+import { projects } from "./projectData";
 import { useNavigate } from "react-router-dom";
 
 export default function Projects() {
@@ -70,7 +69,7 @@ export default function Projects() {
                 className={`py-[0.5rem] px-[1rem] rounded-full text-[0.875rem] font-medium transition-colors ${activeTab === "games" ? "bg-white text-[#011829]" : "text-white"}`}
                 onClick={() => setActiveTab("games")}
               >
-                Design
+                Games
               </button>
               <button
                 className={`py-[0.5rem] px-[1rem] rounded-full text-[0.875rem] font-medium transition-colors ${activeTab === "others" ? "bg-white text-[#011829]" : "text-white"}`}

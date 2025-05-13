@@ -1,19 +1,19 @@
-import React from "react";
-import { projects, ProjectType } from "../projectData";
+import React, { useState } from "react";
+import { projects } from "../projectData";
 import { useParams } from "react-router-dom";
 import Footer from "../../Footer";
 import EventsNavbar from "../../events/EventsNavbar";
-import {
-  BadgeCheck,
-  BadgeDollarSign,
-  CalendarDays,
-  CalendarIcon,
-} from "lucide-react";
+import { BadgeCheck, BadgeDollarSign, CalendarDays } from "lucide-react";
+import ProjectApplication from "./ProjectApplication";
 
 export default function ProjectDetail() {
   const params = useParams();
   const id = params.id;
   const project = projects.filter((project) => project.id === id)[0];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModal = () => {
+    setIsModalOpen(true);
+  };
   return (
     <div className="main-container w-full h-auto bg-[#011829] relative overflow-hidden">
       <div className="mb-8">
@@ -176,7 +176,10 @@ export default function ProjectDetail() {
                     Registration
                   </div>
 
-                  <button className="flex h-[60px] items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full bg-[#4DA2FF] rounded-[10px] text-white">
+                  <button
+                    className="flex h-[60px] items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full bg-[#4DA2FF] rounded-[10px] text-white"
+                    onClick={handleModal}
+                  >
                     Apply Now!
                   </button>
                 </div>
@@ -190,7 +193,7 @@ export default function ProjectDetail() {
 
               <p className="relative self-stretch h-[403.62px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-white text-base tracking-[0] leading-[normal]">
                 <span className="[font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-white text-base tracking-[0]">
-                  Join the Sentz team, for a relaxed evening of networking,
+                  Join the Sentz team, for a relaxed evening of networking,
                   meaningful conversations, and an inside look at the Sentz app
                   and the future of fintech and cross-border payments.
                   <br />
@@ -233,6 +236,14 @@ export default function ProjectDetail() {
             </div>
           </section>
         </div>
+
+        {/* Project Application Modal */}
+        {isModalOpen && (
+          <ProjectApplication
+            projectId={project.id}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
       </div>
       <Footer />
     </div>
