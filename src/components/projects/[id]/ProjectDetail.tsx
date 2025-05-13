@@ -3,6 +3,12 @@ import { projects, ProjectType } from "../projectData";
 import { useParams } from "react-router-dom";
 import Footer from "../../Footer";
 import EventsNavbar from "../../events/EventsNavbar";
+import {
+  BadgeCheck,
+  BadgeDollarSign,
+  CalendarDays,
+  CalendarIcon,
+} from "lucide-react";
 
 export default function ProjectDetail() {
   const params = useParams();
@@ -45,7 +51,7 @@ export default function ProjectDetail() {
 
                   <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                     <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Bold',Helvetica] font-bold text-white text-lg tracking-[0] leading-[normal]">
-                      DeepBook
+                      {project.creator}
                     </div>
 
                     <img
@@ -124,7 +130,7 @@ export default function ProjectDetail() {
             <div className="flex flex-col items-start gap-[43px] relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex flex-col w-[458px] items-start gap-[41px] relative flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-6 relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="self-stretch h-[38px] [font-family:'Space_Grotesk-Medium',Helvetica] font-medium text-[44px] whitespace-nowrap relative mt-[-1.00px] text-white tracking-[0] leading-[normal]">
+                  <div className="self-stretch h-[38px] font-bold text-[44px] whitespace-nowrap relative mt-[-1.00px] text-white tracking-[0] leading-[normal]">
                     {project.title}
                   </div>
 
@@ -140,23 +146,15 @@ export default function ProjectDetail() {
                         {project.creator}
                       </div>
 
-                      <img
-                        className="relative w-4 h-4"
-                        alt="Solar verified check"
-                        src={"image1"}
-                      />
+                      <BadgeCheck className="fill-blue-600" />
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col w-[227px] items-start gap-4 relative flex-[0_0_auto]">
                   <div className="h-[15px] items-center flex gap-3 relative self-stretch w-full">
-                    <div className="flex w-6 h-6 items-center justify-center gap-2.5 p-1 relative mt-[-4.50px] mb-[-4.50px] rounded-[5px]">
-                      <img
-                        className="relative w-5 h-5 mt-[-2.00px] mb-[-2.00px] ml-[-2.00px] mr-[-2.00px]"
-                        alt="Fluent calendar"
-                        src={"fluentCalendar12Filled"}
-                      />
+                    <div className="flex items-center justify-center gap-2.5 p-1 relative mt-[-4.50px] mb-[-4.50px] rounded-[5px]">
+                      <CalendarDays className="fill-white" />
                     </div>
 
                     <p className="relative w-fit mt-[-5.00px] mb-[-3.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-white text-lg tracking-[0] leading-[normal]">
@@ -165,11 +163,9 @@ export default function ProjectDetail() {
                   </div>
 
                   <div className="h-[15px] items-center flex gap-3 relative self-stretch w-full">
-                    <img
-                      className="relative w-6 h-6 mt-[-4.50px] mb-[-4.50px]"
-                      alt="Token usdc"
-                      src={"tokenUsdc"}
-                    />
+                    <div className="flex items-center justify-center gap-2.5 p-1 relative mt-[-4.50px] mb-[-4.50px] rounded-[5px]">
+                      <BadgeDollarSign className="fill-white" />
+                    </div>
 
                     <div className="relative w-fit mt-[-5.00px] mb-[-3.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-white text-lg tracking-[0] leading-[normal]">
                       {project.prize}
