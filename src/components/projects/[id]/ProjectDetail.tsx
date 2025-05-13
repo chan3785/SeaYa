@@ -54,11 +54,7 @@ export default function ProjectDetail() {
                       {project.creator}
                     </div>
 
-                    <img
-                      className="relative w-4 h-4"
-                      alt="Solar verified check"
-                      src={"solarVerifiedCheckBold"}
-                    />
+                    <BadgeCheck className="fill-blue-600" />
                   </div>
                 </div>
               </div>
