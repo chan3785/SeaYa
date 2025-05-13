@@ -10,10 +10,10 @@ export default function ProjectDetail() {
   const project = projects.filter((project) => project.id === id)[0];
   return (
     <div className="main-container w-full h-auto bg-[#011829] relative overflow-hidden">
+      <div className="mb-8">
+        <EventsNavbar />
+      </div>
       <div className="grid place-items-center min-h-screen mb-20">
-        <div className="mb-8">
-          <EventsNavbar />
-        </div>
         <div className="inline-flex items-end gap-[50px]">
           <section className="inline-flex flex-col items-start gap-7 relative flex-[0_0_auto]">
             <img
