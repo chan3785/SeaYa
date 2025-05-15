@@ -1,5 +1,6 @@
 import React from "react";
 import { EventType } from "./eventData";
+import { useNavigate } from "react-router-dom";
 
 interface EventDetailProps {
   event: EventType;
@@ -7,6 +8,7 @@ interface EventDetailProps {
 }
 
 export default function EventDetail({ event, onClose }: EventDetailProps) {
+  const navigate = useNavigate();
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-[1rem]">
       <div className="bg-black rounded-[1.25rem] w-full max-w-[48rem] max-h-[90vh] overflow-y-auto">
@@ -120,7 +122,10 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
               </p>
 
               <div className="mt-[2rem] flex justify-end">
-                <button className="bg-[#4da2ff] text-white py-[0.5rem] px-[1.5rem] rounded-full font-medium hover:bg-[#3b8de6] transition-colors">
+                <button
+                  className="bg-[#4da2ff] text-white py-[0.5rem] px-[1.5rem] rounded-full font-medium hover:bg-[#3b8de6] transition-colors"
+                  onClick={() => navigate(`/discover-events/${event.id}`)}
+                >
                   Register Now
                 </button>
               </div>

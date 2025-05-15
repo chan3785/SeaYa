@@ -8,7 +8,7 @@ export interface EventType {
   description?: string;
 }
 
-export const pastEvents: EventType[] = [
+export const events: EventType[] = [
   {
     id: "event1",
     title: "Sui Brunch Meetup",
@@ -73,9 +73,6 @@ export const pastEvents: EventType[] = [
     description:
       "Explore the latest innovations in decentralized finance on the Sui blockchain.",
   },
-];
-
-export const upcomingEvents: EventType[] = [
   {
     id: "past1",
     title: "Sui Launch Party",
@@ -107,9 +104,6 @@ export const upcomingEvents: EventType[] = [
       "../../../67162c1f36214ab1f0f7964a_bU8vRbUeM9UgQdkA4u2snz1hU9jbZaVcAsCroBdshfU1.png",
     description: "Discussion on the future of governance in the Sui ecosystem.",
   },
-];
-
-export const discoverEvents: EventType[] = [
   {
     id: "discover1",
     title: "Sui Connect:Lagos",
