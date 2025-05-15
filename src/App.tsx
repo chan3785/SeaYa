@@ -10,6 +10,7 @@ import VotePage from "./page/vote";
 import SettingsPage from "./page/settings";
 import ProjectDetailPage from "./page/project-detail";
 import EventDetailPage from "./page/event-detail";
+import VoteProposalPage from "./page/vote-proposal";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/create-projects" element={<CreateProjectsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/vote" element={<VotePage />} />
+        <Route path="/proposal" element={<VoteProposalPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </Router>
