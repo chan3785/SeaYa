@@ -79,7 +79,7 @@ export default function Navbar() {
       </div>
       <div className="flex gap-6 items-center shrink-0 flex-nowrap relative z-[14]">
         <a
-          href="/events"
+          href="/discover-events"
           className="flex py-[0.625rem] px-[3.0rem] gap-[0.625rem] justify-center items-center shrink-0 flex-nowrap rounded-[3.125rem] border-solid border border-[#1e1e1e] relative z-[15] cursor-pointer"
         >
           <span className="h-[1.25rem] shrink-0 basis-auto font-['Space_Grotesk'] text-[1.25rem] font-normal leading-[1.25rem] text-[#1e1e1e] relative text-left whitespace-nowrap z-[16]">
