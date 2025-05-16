@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProposalList() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col w-[1180px] items-start gap-6 relative">
       <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
@@ -49,7 +51,10 @@ export default function ProposalList() {
             </div>
           </div>
 
-          <div className="flex flex-col h-[113.24px] items-start gap-2.5 px-10 py-[38px] relative self-stretch w-full border-b [border-bottom-style:solid] border-muted-foreground">
+          <div
+            className="flex flex-col h-[113.24px] items-start gap-2.5 px-10 py-[38px] relative self-stretch w-full border-b [border-bottom-style:solid] border-muted-foreground"
+            onClick={() => navigate(`/proposal/Round #2 LFG Voting`)}
+          >
             <div className="relative w-[1107.05px] h-[38px] mb-[-0.76px] mr-[-7.05px]">
               <div className="absolute w-[92px] top-2 left-[382px] [font-family:'Space_Grotesk',Helvetica] font-normal text-white text-lg text-center tracking-[0] leading-[normal]">
                 -

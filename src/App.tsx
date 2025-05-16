@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/create-projects" element={<CreateProjectsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/vote" element={<VotePage />} />
-        <Route path="/proposal" element={<VoteProposalPage />} />
+        <Route path="/proposal/:id" element={<VoteProposalPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </Router>
