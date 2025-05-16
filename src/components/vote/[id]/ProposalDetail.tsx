@@ -1,11 +1,12 @@
+import { ChevronRight } from "lucide-react";
 import React from "react";
 
 export default function ProposalDetail() {
   return (
-    <div className="flex w-[680px] h-[684.75px] items-center gap-2.5 px-[50px] py-[41px] relative bg-seaya-black rounded-[20px] border border-solid border-stroke-gray">
+    <div className="flex bg-[#030F1C] w-[680px] h-[684.75px] justify-center items-center gap-2.5 px-[50px] py-[41px] relative bg-transparent rounded-[20px] border border-solid border-muted-foreground">
       <div className="flex flex-col w-[579.11px] items-start gap-8 relative mt-[-0.31px] mb-[-0.31px]">
-        <div className="inline-flex items-center justify-center gap-2.5 px-5 py-[5px] relative flex-[0_0_auto] bg-stroke-gray rounded-[20px]">
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-white text-base tracking-[0] leading-[normal]">
+        <div className="inline-flex items-center justify-center gap-2.5 px-5 py-[5px] relative flex-[0_0_auto] bg-gray-500 rounded-[20px]">
+          <div className="relative w-fit mt-[-1.00px] font-normal text-white text-base tracking-[0] leading-[normal]">
             Proposal
           </div>
         </div>
@@ -33,17 +34,13 @@ export default function ProposalDetail() {
           vote for 1 candidate.
         </p>
 
-        <div className="flex flex-col w-[194px] items-start gap-2.5 p-2.5 relative flex-[0_0_auto] rounded-[20px] border border-solid border-white">
-          <div className="flex items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+        <div className="flex flex-col w-[194px] items-center gap-2.5 p-2.5 relative flex-[0_0_auto] rounded-[20px] border border-solid border-white">
+          <div className="flex items-center gap-3 relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Medium',Helvetica] font-medium text-white text-base tracking-[0] leading-[normal]">
               View Full Proposal
             </div>
 
-            <img
-              className="relative w-6 h-6"
-              alt="Lucide chevron down"
-              src={"lucideChevronDown"}
-            />
+            <ChevronRight className="text-white" />
           </div>
         </div>
       </div>

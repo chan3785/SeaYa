@@ -11,13 +11,7 @@ export default function EventDetail() {
   const id = params.id;
   const event = events.filter((event) => event.id === id)[0];
   const handleApply = () => {
-    toast(`Application has been submitted, Thank you for attending!`, {
-      // description: "Sunday, December 03, 2023 at 9:00 AM",
-      action: {
-        label: "Go Home",
-        onClick: () => console.log("home"),
-      },
-    });
+    toast.success("Application has been submitted, Thank you for attending!");
   };
   return (
     <div className="main-container w-full h-auto bg-[#011829] relative overflow-hidden">
@@ -229,7 +223,7 @@ export default function EventDetail() {
             </div>
           </section>
         </div>
-        <Toaster />
+        <Toaster richColors />
 
         {/* Project Application Modal */}
         {/* {isModalOpen && (

@@ -38,13 +38,7 @@ export default function ProjectApplication({
   const handleSubmit = () => {
     setFormData({ ...formData, [projectId]: projectId });
     console.log(formData);
-    toast("Application has been submitted", {
-      // description: "Sunday, December 03, 2023 at 9:00 AM",
-      action: {
-        label: "Go Home",
-        onClick: () => console.log("home"),
-      },
-    });
+    toast.success("Application has been submitted");
   };
 
   return (
@@ -139,7 +133,7 @@ export default function ProjectApplication({
           </div>
         </div>
       </div>
-      <Toaster />
+      <Toaster richColors />
     </div>
   );
 }

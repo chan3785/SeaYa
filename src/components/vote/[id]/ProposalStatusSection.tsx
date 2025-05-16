@@ -1,4 +1,5 @@
 import React from "react";
+import { toast, Toaster } from "sonner";
 
 export default function ProposalStatus() {
   return (
@@ -9,8 +10,8 @@ export default function ProposalStatus() {
             Status
           </div>
 
-          <div className="inline-flex items-center justify-center gap-2.5 px-5 py-[5px] relative flex-[0_0_auto] bg-stroke-gray rounded-[20px] border border-solid border-primary-color">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-white text-base tracking-[0] leading-[normal]">
+          <div className="inline-flex items-center justify-center gap-2.5 px-5 py-[5px] relative flex-[0_0_auto] bg-gray-500 rounded-[20px] border border-solid border-[#4DA2FF]">
+            <div className="relative w-fit mt-[-1.00px] font-normal text-white text-base tracking-[0] leading-[normal]">
               Active
             </div>
           </div>
@@ -18,7 +19,7 @@ export default function ProposalStatus() {
 
         <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-stroke-gray text-lg tracking-[0] leading-[normal]">
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-muted-foreground text-lg tracking-[0] leading-[normal]">
               Start:
             </div>
 
@@ -28,7 +29,7 @@ export default function ProposalStatus() {
           </div>
 
           <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-stroke-gray text-lg tracking-[0] leading-[normal]">
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-muted-foreground text-lg tracking-[0] leading-[normal]">
               Ends:
             </div>
 
@@ -38,7 +39,7 @@ export default function ProposalStatus() {
           </div>
 
           <div className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-stroke-gray text-lg tracking-[0] leading-[normal]">
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-muted-foreground text-lg tracking-[0] leading-[normal]">
               Time to vote:
             </div>
 
@@ -56,7 +57,7 @@ export default function ProposalStatus() {
 
         <div className="flex flex-col items-start gap-6 relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-stroke-gray text-lg tracking-[0] leading-[normal]">
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Regular',Helvetica] font-normal text-muted-foreground text-lg tracking-[0] leading-[normal]">
               Vote count
             </div>
 
@@ -130,14 +131,18 @@ export default function ProposalStatus() {
           Final voting results will be shown once the voting is closed.
         </p>
 
-        <div className="flex flex-col h-[63px] items-center justify-center gap-2.5 px-3.5 py-[19px] relative self-stretch w-full bg-primary-color rounded-[10px]">
+        <button
+          className="flex flex-col h-[63px] items-center justify-center gap-2.5 px-3.5 py-[19px] relative self-stretch w-full bg-[#4DA2FF] rounded-[10px]"
+          onClick={() => toast.success("Thank you for casting your vote")}
+        >
           <div className="inline-flex items-start gap-3 relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Space_Grotesk-Bold',Helvetica] font-bold text-white text-lg tracking-[0] leading-[normal]">
               Vote
             </div>
           </div>
-        </div>
+        </button>
       </div>
+      <Toaster richColors />
     </div>
   );
 }
