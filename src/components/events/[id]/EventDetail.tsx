@@ -5,13 +5,43 @@ import Footer from "../../Footer";
 import EventsNavbar from "../../events/EventsNavbar";
 import { BadgeCheck, CalendarDays, MapPin } from "lucide-react";
 import { toast, Toaster } from "sonner";
+import { bcs } from "@mysten/sui/bcs";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { Transaction } from "@mysten/sui/transactions";
 
 export default function EventDetail() {
   const params = useParams();
   const id = params.id;
   const event = events.filter((event) => event.id === id)[0];
+  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
   const handleApply = () => {
-    toast.success("Application has been submitted, Thank you for attending!");
+    const tx = new Transaction();
+    tx.moveCall({
+      target:
+        "0x4b3dca3c61c383eff63b60c918c5f8f56625fd0ffd5f881d8f221cc891af3e2e::seaya_v2::register_for_event",
+      arguments: [
+        bcs.Address.serialize(
+          "0xea0687aae8cb999f6fd96fed318228e499f213c1d943a81a6e2c7a31ebb4683b"
+        ),
+      ],
+    });
+    signAndExecute(
+      {
+        transaction: tx, // Transaction 객체
+      },
+      {
+        onSuccess: (result) => {
+          // 결과 출력
+          console.log(result);
+          toast.success(
+            "Application has been submitted, Thank you for attending!"
+          );
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      }
+    );
   };
   return (
     <div className="main-container w-full h-auto bg-[#011829] relative overflow-hidden">

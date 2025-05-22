@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EventsNavbar from "../events/EventsNavbar";
 import DatePicker from "./DatePicker";
 import useDate, { useTime } from "../../context/useDate";
@@ -6,7 +6,12 @@ import TimePicker from "./TimePicker";
 import TimeZonePicker from "./TimezonePicker";
 import { FileText, MapPin, Palette, Tickets, UserRound } from "lucide-react";
 import Footer from "../Footer";
+import { Transaction } from "@mysten/sui/transactions";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { bcs } from "@mysten/sui/bcs";
+import { fromBase64 } from "@mysten/bcs";
 
+// initialize the serializer with default Sui Move configurations
 interface FormData {
   eventName: string;
   startDate: string;
@@ -24,6 +29,8 @@ interface FormData {
 }
 
 export default function CreateEvents() {
+  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+
   const [formData, setFormData] = useState<FormData>({
     eventName: "",
     startDate: "",
@@ -42,7 +49,6 @@ export default function CreateEvents() {
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const { dateValue } = useDate();
   const { timeValue } = useTime();
-
   const [timezone, setTimezone] = useState<string>(""); // 사용자가 선택한 값이 바로 바로 적용이 안됨. 이걸 고쳐야 된다.
 
   const handleChange = (
@@ -53,16 +59,55 @@ export default function CreateEvents() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  useEffect(() => {
+    if (dateValue && timeValue && timezone) {
+      setFormData({
+        ...formData,
+        startTime: timeValue?.from ? timeValue.from?.toString() : "",
+        endTime: timeValue?.to ? timeValue.to?.toString() : "",
+        startDate: dateValue?.from ? dateValue.from?.toString() : "",
+        endDate: dateValue?.to ? dateValue.to?.toString() : "",
+        timeZone: timezone,
+      });
+    }
+  }, [dateValue, timeValue, timezone]);
 
   const handleSubmit = () => {
-    setFormData({
-      ...formData,
-      startTime: timeValue?.from ? timeValue.from?.toString() : "",
-      endTime: timeValue?.to ? timeValue.to?.toString() : "",
-      startDate: dateValue?.from ? dateValue.from?.toString() : "",
-      endDate: dateValue?.to ? dateValue.to?.toString() : "",
-      timeZone: timezone,
+    const tx = new Transaction();
+    tx.moveCall({
+      target:
+        "0x4b3dca3c61c383eff63b60c918c5f8f56625fd0ffd5f881d8f221cc891af3e2e::seaya_v2::create_event",
+      arguments: [
+        bcs.String.serialize(formData.eventName),
+        bcs.String.serialize(formData.description),
+        bcs.String.serialize(formData.location),
+        bcs.String.serialize(formData.startDate.substring(0, 14)),
+        bcs.U64.serialize(
+          formData.ticketsOption && !isNaN(Number(formData.ticketsOption))
+            ? Number(formData.ticketsOption)
+            : 0 // 기본값 0
+        ),
+        bcs.U64.serialize(
+          formData.attendeeAmount && !isNaN(Number(formData.attendeeAmount))
+            ? Number(formData.attendeeAmount)
+            : 0 // 기본값 0
+        ),
+      ],
     });
+    signAndExecute(
+      {
+        transaction: tx, // Transaction 객체
+      },
+      {
+        onSuccess: (result) => {
+          const str3 = bcs.string().parse(fromBase64(result.effects));
+          console.log(str3);
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      }
+    );
     console.log(formData);
   };
 

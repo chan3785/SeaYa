@@ -1,4 +1,4 @@
-import { getFullnodeUrl } from "@mysten/sui/client";
+import { getFullnodeUrl, SuiClient } from "@mysten/sui/client";
 import {
   DEVNET_COUNTER_PACKAGE_ID,
   TESTNET_COUNTER_PACKAGE_ID,
@@ -29,3 +29,6 @@ const { networkConfig, useNetworkVariable, useNetworkVariables } =
   });
 
 export { networkConfig, useNetworkVariable, useNetworkVariables };
+
+
+export const suiClient = new SuiClient({ url: networkConfig.testnet.url });

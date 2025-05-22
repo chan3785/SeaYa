@@ -23,6 +23,9 @@ importers:
       '@mui/x-date-pickers-pro':
         specifier: 8.0.0-beta.3
         version: 8.0.0-beta.3(@emotion/react@11.14.0(@types/react@19.0.10)(react@18.3.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.10)(react@18.3.1))(@types/react@19.0.10)(react@18.3.1))(@mui/material@7.0.2(@emotion/react@11.14.0(@types/react@19.0.10)(react@18.3.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.10)(react@18.3.1))(@types/react@19.0.10)(react@18.3.1))(@types/react@19.0.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mui/system@7.0.2(@emotion/react@11.14.0(@types/react@19.0.10)(react@18.3.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.10)(react@18.3.1))(@types/react@19.0.10)(react@18.3.1))(@types/react@19.0.10)(react@18.3.1))(@types/react@19.0.10)(date-fns@4.1.0)(dayjs@1.11.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mysten/bcs':
+        specifier: ^1.6.1
+        version: 1.6.1
       '@mysten/dapp-kit':
         specifier: 0.14.50
         version: 0.14.50(@tanstack/react-query@5.67.3(react@18.3.1))(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.2)
@@ -53,6 +56,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.50.1
         version: 5.67.3(react@18.3.1)
+      bcs:
+        specifier: link:@mysten/sui/bcs
+        version: link:@mysten/sui/bcs
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -858,6 +864,9 @@ packages:
   '@mysten/bcs@1.4.0':
     resolution: {integrity: sha512-YwDYspceLt8b7v6ohPvy8flQEi+smtfSG5d2A98CbUA48XBmOqTSPNmpw9wsZVVnrH2avr+BS5uVhDZT+EquYA==}
 
+  '@mysten/bcs@1.6.1':
+    resolution: {integrity: sha512-pywsl2+jxbib5CbteAjMpmJpnj1pcUco2ff+lXCK3hfppPbkyWEMbZDQn1jNngV6ADQ3IFIvPs0FaS7fKWPOLA==}
+
   '@mysten/dapp-kit@0.14.50':
     resolution: {integrity: sha512-zoTonryNUozeVmdg6oCRVwxvwC3k9iMm8aRHSCPOjYJFf3NPvnEli9ykM09OGLrz1T/W5hfEFt7FarUIYd8UNA==}
     peerDependencies:
@@ -867,6 +876,9 @@ packages:
   '@mysten/sui@1.21.2':
     resolution: {integrity: sha512-8AesvczokAUv796XiOo8af2+1IYA9bRon11Ra+rwehvqhz+sMRT8A+Cw5sDnlSc9/aQwM51JQKUnvMczNbpfYA==}
     engines: {node: '>=18'}
+
+  '@mysten/utils@0.0.0':
+    resolution: {integrity: sha512-KRI57Qow3E7TGqczimazwGf7+fwukdOi+6a31igSCzz0kPjAXbyK1a1gXaxeLMF8xEZ07ouW3RnsWt+EaUuHUw==}
 
   '@mysten/wallet-standard@0.13.26':
     resolution: {integrity: sha512-0fRHmQ5RS0WEeSyfzdqrOWLssrZwDgR9Mw7Qhsfzq1UyDlS/GXYoL+dKpH+Uqfan33lt6hROPeXFyqw/vmF9Zg==}
@@ -4249,6 +4261,11 @@ snapshots:
     dependencies:
       bs58: 6.0.0
 
+  '@mysten/bcs@1.6.1':
+    dependencies:
+      '@mysten/utils': 0.0.0
+      '@scure/base': 1.2.4
+
   '@mysten/dapp-kit@0.14.50(@tanstack/react-query@5.67.3(react@18.3.1))(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.2)':
     dependencies:
       '@mysten/sui': 1.21.2(typescript@5.8.2)
@@ -4293,6 +4310,10 @@ snapshots:
       - '@gql.tada/svelte-support'
       - '@gql.tada/vue-support'
       - typescript
+
+  '@mysten/utils@0.0.0':
+    dependencies:
+      '@scure/base': 1.2.4
 
   '@mysten/wallet-standard@0.13.26(typescript@5.8.2)':
     dependencies:
