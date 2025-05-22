@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EventsNavbar from "../events/EventsNavbar";
 import DatePicker from "./DatePicker";
-import useDate from "../../context/useDate";
+import useDate, { useTime } from "../../context/useDate";
 import TimePicker from "./TimePicker";
 import TimeZonePicker from "./TimezonePicker";
 import { FileText, MapPin, Palette, Tickets, UserRound } from "lucide-react";
@@ -41,6 +41,9 @@ export default function CreateEvents() {
   });
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const { dateValue } = useDate();
+  const { timeValue } = useTime();
+
+  const [timezone, setTimezone] = useState<string>(""); // 사용자가 선택한 값이 바로 바로 적용이 안됨. 이걸 고쳐야 된다.
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -49,10 +52,17 @@ export default function CreateEvents() {
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
   };
 
   const handleSubmit = () => {
+    setFormData({
+      ...formData,
+      startTime: timeValue?.from ? timeValue.from?.toString() : "",
+      endTime: timeValue?.to ? timeValue.to?.toString() : "",
+      startDate: dateValue?.from ? dateValue.from?.toString() : "",
+      endDate: dateValue?.to ? dateValue.to?.toString() : "",
+      timeZone: timezone,
+    });
     console.log(formData);
   };
 
@@ -89,7 +99,7 @@ export default function CreateEvents() {
             <div className="relative flex gap-4">
               <DatePicker className="text-white" />
               <TimePicker />
-              <TimeZonePicker />
+              <TimeZonePicker setTimezone={setTimezone} />
             </div>
             <div className="relative">
               <span className="absolute left-1 top-1/2 transform -translate-y-1/2">

@@ -5,17 +5,24 @@ import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
+import { useCurrentAccount } from "@mysten/dapp-kit";
+
 export default function EventsNavbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   // Mock user data - in a real app, this would come from authentication
+
+  const account = useCurrentAccount();
+
   const userData = {
     username: "User1234",
     email: "User1234@gmail.com",
-    walletAddress: "0x752...b5a",
+    walletAddress:
+      account?.address.toString().slice(0, 4) +
+      "..." +
+      account?.address.toString().slice(-4),
   };
-
   return (
     <div className="w-full bg-[#011829] py-4 px-4 sm:px-8 md:px-16 lg:px-24 flex justify-between items-center">
       <div className="flex items-center">
