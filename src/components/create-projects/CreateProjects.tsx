@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EventsNavbar from "../events/EventsNavbar";
 import DatePicker from "../create-event/DatePicker";
-import useDate from "../../context/useDate";
+import useDate, { useTime } from "../../context/useDate";
 import TimePicker from "../create-event/TimePicker";
 import TimeZonePicker from "../create-event/TimezonePicker";
 import {
@@ -13,6 +13,11 @@ import {
   UserRound,
 } from "lucide-react";
 import Footer from "../Footer";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { toast } from "sonner";
+import { bcs } from "@mysten/sui/bcs";
+import { TESTNET_COUNTER_PACKAGE_ID } from "../../constants";
+import { Transaction } from "@mysten/sui/transactions";
 
 interface FormData {
   projectName: string;
@@ -29,6 +34,8 @@ interface FormData {
 }
 
 export default function CreateProjects() {
+  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+
   const [formData, setFormData] = useState<FormData>({
     projectName: "",
     startDate: "",
@@ -43,6 +50,22 @@ export default function CreateProjects() {
     eventImage: null,
   });
   const [previewUrl, setPreviewUrl] = useState<string>("");
+  const [timezone, setTimezone] = useState<string>(""); // 사용자가 선택한 값이 바로 바로 적용이 안됨. 이걸 고쳐야 된다.
+  const { dateValue } = useDate();
+  const { timeValue } = useTime();
+
+  useEffect(() => {
+    if (dateValue && timeValue && timezone) {
+      setFormData({
+        ...formData,
+        startTime: timeValue?.from ? timeValue.from?.toString() : "",
+        endTime: timeValue?.to ? timeValue.to?.toString() : "",
+        startDate: dateValue?.from ? dateValue.from?.toString() : "",
+        endDate: dateValue?.to ? dateValue.to?.toString() : "",
+        timeZone: timezone,
+      });
+    }
+  }, [dateValue, timeValue, timezone]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -55,6 +78,33 @@ export default function CreateProjects() {
   };
 
   const handleSubmit = () => {
+    const tx = new Transaction();
+    tx.moveCall({
+      target: `${TESTNET_COUNTER_PACKAGE_ID}::seaya_v2::create_event`,
+      arguments: [
+        bcs.Address.serialize(
+          "0xea0687aae8cb999f6fd96fed318228e499f213c1d943a81a6e2c7a31ebb4683b"
+        ),
+        bcs.String.serialize(formData.projectName),
+        bcs.String.serialize(formData.description),
+        bcs.String.serialize(formData.location),
+      ],
+    });
+    signAndExecute(
+      {
+        transaction: tx, // Transaction 객체
+      },
+      {
+        onSuccess: (result) => {
+          toast.success(
+            `Application has been submitted, Thank you for attending! TxHash:${result.digest}`
+          );
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      }
+    );
     console.log(formData);
   };
 
@@ -91,7 +141,7 @@ export default function CreateProjects() {
             <div className="relative flex gap-4">
               <DatePicker className="text-white" />
               <TimePicker />
-              <TimeZonePicker />
+              <TimeZonePicker setTimezone={setTimezone} />
             </div>
             <div className="relative">
               <span className="absolute left-1 top-1/2 transform -translate-y-1/2">

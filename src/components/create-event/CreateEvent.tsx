@@ -9,8 +9,8 @@ import Footer from "../Footer";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { bcs } from "@mysten/sui/bcs";
-import { fromBase64 } from "@mysten/bcs";
 import { toast, Toaster } from "sonner";
+import { TESTNET_COUNTER_PACKAGE_ID } from "../../constants";
 
 // initialize the serializer with default Sui Move configurations
 interface FormData {
@@ -76,8 +76,7 @@ export default function CreateEvents() {
   const handleSubmit = () => {
     const tx = new Transaction();
     tx.moveCall({
-      target:
-        "0x4b3dca3c61c383eff63b60c918c5f8f56625fd0ffd5f881d8f221cc891af3e2e::seaya_v2::create_event",
+      target: `${TESTNET_COUNTER_PACKAGE_ID}::seaya_v2::create_event`,
       arguments: [
         bcs.String.serialize(formData.eventName),
         bcs.String.serialize(formData.description),

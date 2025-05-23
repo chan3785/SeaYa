@@ -8,17 +8,18 @@ import { toast, Toaster } from "sonner";
 import { bcs } from "@mysten/sui/bcs";
 import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { Transaction } from "@mysten/sui/transactions";
+import { TESTNET_COUNTER_PACKAGE_ID } from "../../../constants";
 
 export default function EventDetail() {
   const params = useParams();
   const id = params.id;
   const event = events.filter((event) => event.id === id)[0];
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+
   const handleApply = () => {
     const tx = new Transaction();
     tx.moveCall({
-      target:
-        "0x4b3dca3c61c383eff63b60c918c5f8f56625fd0ffd5f881d8f221cc891af3e2e::seaya_v2::register_for_event",
+      target: `${TESTNET_COUNTER_PACKAGE_ID}::seaya_v2::register_for_event`,
       arguments: [
         bcs.Address.serialize(
           "0xea0687aae8cb999f6fd96fed318228e499f213c1d943a81a6e2c7a31ebb4683b"
@@ -34,7 +35,7 @@ export default function EventDetail() {
           // 결과 출력
           console.log(result);
           toast.success(
-            "Application has been submitted, Thank you for attending!"
+            `Application has been submitted, Thank you for attending! TX hash: ${result.digest}`
           );
         },
         onError: (err) => {
