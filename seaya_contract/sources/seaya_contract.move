@@ -52,6 +52,29 @@ module seaya::seaya_v2 {
         funds: Balance<SUI>,              // Collected funds in SUI
     }
 
+    public struct Project has key {
+        id: UID,
+        event_id: ID,
+        creator: address,
+        name: String,
+        description: String,
+        details: String,
+        votes: u64,
+        voters: vector<address>,
+    }
+
+    public struct ProjectCreated has copy, drop {
+        id: ID,
+        event_id: ID,
+        creator: address,
+        name: String,
+    }
+
+    public struct Voted has copy, drop {
+        project: ID,
+        voter: address 
+    }  
+
     // ===== Error Codes =====
     /// Unauthorized access - caller is not the event host
     const E_NOT_HOST: u64 = 1;
@@ -71,6 +94,11 @@ module seaya::seaya_v2 {
     const E_ALREADY_REFUNDED: u64 = 9;
     /// Unauthorized reward distributor
     const E_NOT_AUTHORIZED: u64 = 10;
+    const E_PROJECT_ALREADY_EXISTS: u64 = 11;
+    const E_ALREADY_VOTED: u64 = 12;
+    const E_PROJECT_NOT_FOUND: u64 = 13;
+    const E_NOT_JUDGE: u64 = 14;
+
 
     // ===== Event Status Constants =====
     /// Event status: active, ended, canceled
@@ -369,6 +397,56 @@ module seaya::seaya_v2 {
             ticket_price: new_ticket_price,
         });
     }
+
+    public fun create_project(
+        event: &Event,
+        name: String,
+        description: String,
+        details: String,
+        ctx: &mut TxContext
+    ) {
+        let creator = tx_context::sender(ctx);
+        let project = Project {
+            id: object::new(ctx),
+            event_id: object::uid_to_inner(&event.id),
+            creator,
+            name,
+            description,
+            details,
+            votes: 0,
+            voters: vector::empty<address>(),
+        };
+
+        event::emit(ProjectCreated {
+            id: object::uid_to_inner(&project.id),
+            event_id: object::uid_to_inner(&event.id),
+            creator,
+            name,
+        });
+
+        transfer::share_object(project);
+    }
+
+    public fun vote_on_project(
+        project: &mut Project,
+        event: &mut Event,
+        ctx: &mut TxContext
+) {
+    let voter = tx_context::sender(ctx);
+
+    assert!(vector::contains(&event.attendees, &voter), E_NOT_JUDGE);
+    assert!(!vector::contains(&project.voters, &voter), E_ALREADY_VOTED);
+
+    // Record the vote
+    vector::push_back(&mut project.voters, voter);
+    project.votes = project.votes + 1;
+
+    event::emit(Voted {
+        project: object::uid_to_inner(&project.id),
+        voter,
+    });
+}
+
 
     #[allow(lint(self_transfer))]
     public fun register_for_event(event: &mut Event, ctx: &mut TxContext){
