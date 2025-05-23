@@ -254,14 +254,6 @@ export default function EventDetail() {
           </section>
         </div>
         <Toaster richColors />
-
-        {/* Project Application Modal */}
-        {/* {isModalOpen && (
-          <ProjectApplication
-            projectId={project.id}
-            onClose={() => setIsModalOpen(false)}
-          />
-        )} */}
       </div>
       <Footer />
     </div>

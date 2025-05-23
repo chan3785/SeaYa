@@ -10,6 +10,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { bcs } from "@mysten/sui/bcs";
 import { fromBase64 } from "@mysten/bcs";
+import { toast, Toaster } from "sonner";
 
 // initialize the serializer with default Sui Move configurations
 interface FormData {
@@ -100,8 +101,9 @@ export default function CreateEvents() {
       },
       {
         onSuccess: (result) => {
-          const str3 = bcs.string().parse(fromBase64(result.effects));
-          console.log(str3);
+          toast.success(
+            `Application has been submitted, Thank you for attending! TxHash:${result.digest}`
+          );
         },
         onError: (err) => {
           console.log(err);
@@ -262,6 +264,7 @@ export default function CreateEvents() {
             />
           </div>
         </div>
+        <Toaster richColors />
       </section>
       <Footer />
     </div>
