@@ -2,11 +2,11 @@
 <h3 align="center">Sui ecosystem AI-driven event management platform</h3>
 
 <p align="center">
-  <a href="https://sea-ya-bice.vercel.app/" style="color: #a77dff">Platform</a> | <a href="https://www.figma.com/deck/6ADbrcMeqD3Tlj5VkoL6F6" style="color: #a77dff">Pitchdeck</a> | <a href="" style="color: #a77dff">Demo Video</a>
+  <a href="https://sea-ya-bice.vercel.app/" style="color: #a77dff">Platform</a> | <a href="https://www.figma.com/deck/6ADbrcMeqD3Tlj5VkoL6F6" style="color: #a77dff">Pitchdeck</a> | <a href="https://youtu.be/YeA-pflC0Tk" style="color: #a77dff">Demo Video</a>
 </p>
 
 <p align="center">
-  <a href="" style="color: #a77dff">dNFT Contract</a> | <a href="" style="color: #a77dff">Vote Contract</a> | <a href="" style="color: #a77dff">AI agent</a>
+  <a href="https://testnet.suivision.xyz/package/0x0f1687602f8954995944bce0abd292d43181034bec8bc47e8084e9487d624ad1?tab=Code" style="color: #a77dff">Contract Code</a>
 </p>
 
 
