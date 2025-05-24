@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://testnet.suivision.xyz/package/0x0f1687602f8954995944bce0abd292d43181034bec8bc47e8084e9487d624ad1?tab=Code" style="color: #a77dff">Contract Code</a>
+  <a href="https://testnet.suivision.xyz/package/0x0f1687602f8954995944bce0abd292d43181034bec8bc47e8084e9487d624ad1?tab=Code" style="color: #a77dff">Explorer</a> | <a href="https://github.com/chan3785/SeaYa/blob/main/seaya_contract/sources/seaya_contract.move" style="color: #a77dff">Contract Code</a>
 </p>
 
 
